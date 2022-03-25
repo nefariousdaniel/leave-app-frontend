@@ -2,21 +2,33 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 export class UserControl extends React.Component {
+    IsAdminSelectPane(){
+        if(localStorage.getItem("is_admin") === "true"){
+            return <a className="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#userCreate" >Create User</a>
+        }
+        return null;
+    }
+    IsAdminRightPane(){
+        if(localStorage.getItem("is_admin") === "true"){
+            return <UserCreateControl />
+        }
+        return null;
+    }
     render() {
         return (
             <div className="UserControl container">
                 <h1 className="my-4">User Control</h1>
                 <div className="row">
-                    <div className="col-3">
+                    <div className="col-2">
                         <div className="list-group" id="list-tab" role="tablist">
                             <a className="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#userList" >Users List</a>
-                            <a className="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#userCreate" >Create User</a>
+                            <this.IsAdminSelectPane />
                         </div>
                     </div>
-                    <div className="col-9">
+                    <div className="col-10">
                         <div className="tab-content" id="nav-tabContent">
                             <UserListControl />
-                            <UserCreateControl />
+                            <this.IsAdminRightPane />
                         </div>
                     </div>
                 </div>
@@ -103,7 +115,7 @@ class UserCreateControl extends React.Component {
             "email": document.forms[0][1].value,
             "password": document.forms[0][2].value,
             "leave_balance": document.forms[0][3].value,
-            "is_admin": document.forms[0][4].checked,
+            "is_admin": document.forms[0][4].checked ? 1:0,
             "token": localStorage.getItem("token"),
         }
 
