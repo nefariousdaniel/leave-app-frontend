@@ -35,14 +35,13 @@ function NavLinks() {
         <Link className="nav-link" to="/Dashboard">Dashboard</Link>
         <Link className="nav-link" to="/UserControl">User Control</Link>
         <Link className="nav-link" to="/LeaveControl">Leave Control</Link>
-        <a onClick={handlelogout} href="/noRoute" className="nav-link text-danger">Logout</a>
+        <a onClick={()=>{handlelogout()}} href="/noRoute" className="nav-link text-danger">Logout</a>
       </div>
     )
   }
 }
 
-function handlelogout(event){
-  event.preventDefault();
+export function handlelogout(){
   localStorage.removeItem("token");
   localStorage.removeItem("user_details");
   localStorage.removeItem("user_id");

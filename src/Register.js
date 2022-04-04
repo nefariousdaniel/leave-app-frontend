@@ -26,6 +26,7 @@ class Register extends React.Component {
         response = await response.json();
         if(response.status === "OK"){
             alert(response.message);
+            window.location.href="/Login";
         } 
         else if(response.status === "FAIL"){
             alert(response.message);
@@ -40,27 +41,27 @@ class Register extends React.Component {
                 <form onSubmit={this.handleRegister}>
                     <div className="mb-3">
                         <label for="fullname" className="form-label">Full Name</label>
-                        <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe"></input>
+                        <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label for="company_name" className="form-label">Company Name</label>
-                        <input type="text" name="company_name" className="form-control" id="company_name" placeholder="Some Company"></input>
+                        <input type="text" name="company_name" className="form-control" id="company_name" placeholder="Some Company" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label for="company_address" className="form-label">Company Address</label>
-                        <input type="text" name="company_address" className="form-control" id="company_address" placeholder="Some Company"></input>
+                        <input type="text" name="company_address" className="form-control" id="company_address" placeholder="Some Company" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label for="email" className="form-label">E-mail</label>
-                        <input type="email" name="email" className="form-control" id="email" placeholder="example@domain.com"></input>
+                        <input type="email" name="email" className="form-control" id="email" placeholder="example@domain.com" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label for="password" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="password" placeholder="secret"></input>
+                        <input type="password" name="password" className="form-control" id="password" placeholder="secret" minLength={8} required></input>
                     </div>
 
                     <div className="mb-3">

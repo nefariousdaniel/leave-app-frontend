@@ -65,7 +65,7 @@ function UserListControl() {
             setUsers(result.data);
         })
         
-    },[])
+    })
 
     async function handleUserDelete(id,event){
         console.log(id);
@@ -84,7 +84,6 @@ function UserListControl() {
         response = await response.json();
         if (response.status === "OK") {
             alert(response.message);
-            event.target.parentElement.remove();
         }
         else alert(response.message);
     }
@@ -98,7 +97,7 @@ function UserListControl() {
                         let button= "";
                         let adminBadge = "";
                         if(el.is_admin === true) adminBadge = <span class="badge bg-warning text-dark">Admin</span>
-                        if(localStorage.getItem("is_admin") === "true") button = <button className="btn btn-danger btn-sm float-end" onClick={(event)=>{handleUserDelete(el._id,event)}}>Delete User</button>;
+                        if(localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event)=>{handleUserDelete(el._id,event)}}>Delete User</button>;
                         return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge} {button}</li>
                     })
                 }
@@ -141,27 +140,27 @@ class UserCreateControl extends React.Component {
                 <form onSubmit={this.handleCreateUser}>
                     <div className="mb-3">
                         <label htmlFor="fullname" className="form-label">Fullname</label>
-                        <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe"></input>
+                        <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">E-mail</label>
-                        <input type="email" name="email" className="form-control" id="email" placeholder="someone@example.com"></input>
+                        <input type="email" name="email" className="form-control" id="email" placeholder="someone@example.com" required></input>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="password" placeholder="secret"></input>
+                        <input type="password" name="password" className="form-control" id="password" placeholder="secret" minLength="8" required></input>
                     </div>
 
 
                     <div className="mb-3">
                         <label htmlFor="leave_balance" className="form-label">Leave Balance</label>
-                        <input type="number" name="leave_balance" className="form-control" id="leave_balance" placeholder="15"></input>
+                        <input type="number" name="leave_balance" className="form-control" id="leave_balance" placeholder="15" required></input>
                     </div>
 
                     <div className="form-check mb-3">
-                        <input className="form-check-input" type="checkbox" value="false" id="isAdminSelection"></input>
+                        <input className="form-check-input" type="checkbox" value="false" id="isAdminSelection" required></input>
                         <label className="form-check-label" htmlFor="isAdminSelection">
                             Is Admin
                         </label>
