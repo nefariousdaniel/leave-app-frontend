@@ -42,7 +42,15 @@ class Dashboard extends React.Component{
                             <li className="list-group-item">Is Admin: {this.state.is_admin.toString()}</li>
                             <li className="list-group-item">User ID: {this.state._id}</li>
                             <li className="list-group-item">Company ID: {this.state.company_id}</li>
-                            <li className="list-group-item"><button className="btn btn-danger btn-sm" onClick={()=>{this.handleCloseCompany()}}>Close Company</button></li>
+                            {
+                                ()=>{
+                                    if(localStorage.getItem('is_admin') === "true"){
+                                        return (<li className="list-group-item"><button className="btn btn-danger btn-sm" onClick={()=>{this.handleCloseCompany()}}>Close Company</button></li>)
+                                    }
+                                }
+                            }
+                            
+                            
                         </ul>
                     </div>
                     

@@ -65,7 +65,7 @@ export function LeaveControl() {
                         <input type="date" name="end_date" className="form-control" id="end_date" placeholder="A reason for leave." min={new Date().toISOString().split("T")[0]} required></input>
                     </div>
 
-                    <button className="btn btn-danger ms-2 float-end" onClick={() => { document.querySelector("#clrd").close() }}>Cancel</button>
+                    <button className="btn btn-danger ms-2 float-end" onClick={(e) => { e.preventDefault(); document.querySelector("#clrd").close() }}>Cancel</button>
                     <input type="submit" value="Request Leave" className="btn btn-primary float-end"></input>
                 </form>
             </dialog>
@@ -116,7 +116,7 @@ function MyLeaveControl() {
                 setMyleaves(result.data);
             })
 
-    })
+    },[])
 
     return (
         <div class="tab-pane fade show active" id="myleaves" role="tabpanel" >
@@ -193,7 +193,7 @@ function UserLeaveControl() {
                 setLeaves(result.data);
             })
 
-    })
+    },[])
 
     async function handleLeave(id, status, event) {
         console.log(id, status);

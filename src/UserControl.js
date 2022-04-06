@@ -1,37 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+var limit = 10;
+var skip = 0;
 export class UserControl extends React.Component {
-    IsAdminSelectPane(){
-        if(localStorage.getItem("is_admin") === "true"){
-            return <a className="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#userCreate" >Create User</a>
-        }
-        return null;
-    }
-    IsAdminRightPane(){
-        if(localStorage.getItem("is_admin") === "true"){
-            return <UserCreateControl />
-        }
-        return null;
-    }
+
     render() {
         return (
             <div className="UserControl container">
-                <h1 className="my-4">User Control</h1>
-                <div className="row">
-                    <div className="col-2">
-                        <div className="list-group" id="list-tab" role="tablist">
-                            <a className="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#userList" >Users List</a>
-                            <this.IsAdminSelectPane />
-                        </div>
-                    </div>
-                    <div className="col-10">
-                        <div className="tab-content" id="nav-tabContent">
-                            <UserListControl />
-                            <this.IsAdminRightPane />
-                        </div>
-                    </div>
-                </div>
+                <UserListControl />
             </div>
         )
     }
@@ -44,77 +21,14 @@ function UserListControl() {
 
     var [users, setUsers] = useState(null);
 
-    useEffect(() => {
-        let body = {
-            limit: 20,
-            skip: 0,
-            token: localStorage.getItem("token")
-        }
-        fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserlist", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: "cors"
-        })
-        .then(response=>{
-            return response.json();
-        })
-        .then(result=>{
-            setUsers(result.data);
-        })
-        
-    })
-
-    async function handleUserDelete(id,event){
-        console.log(id);
-        let body = {
-            user_id: id,
-            token: localStorage.getItem("token")
-        }
-        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/deleteuser", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: "cors"
-        });
-        response = await response.json();
-        if (response.status === "OK") {
-            alert(response.message);
-        }
-        else alert(response.message);
-    }
-
-    return (
-        <div className="tab-pane fade show active" id="userList" role="tabpanel" >
-            <h2>User List</h2>
-            <ul className="list-group list-group-flush">
-                {
-                    users && users.map(el=>{
-                        let button= "";
-                        let adminBadge = "";
-                        if(el.is_admin === true) adminBadge = <span class="badge bg-warning text-dark">Admin</span>
-                        if(localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event)=>{handleUserDelete(el._id,event)}}>Delete User</button>;
-                        return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge} {button}</li>
-                    })
-                }
-            </ul>
-        </div>
-    )
-}
-
-class UserCreateControl extends React.Component {
-    async handleCreateUser(event) {
+    async function handleCreateUser(event) {
         event.preventDefault();
         let body = {
             "fullname": document.forms[0][0].value,
             "email": document.forms[0][1].value,
             "password": document.forms[0][2].value,
             "leave_balance": document.forms[0][3].value,
-            "is_admin": document.forms[0][4].checked ? 1:0,
+            "is_admin": document.forms[0][4].checked ? 1 : 0,
             "token": localStorage.getItem("token"),
         }
 
@@ -131,13 +45,86 @@ class UserCreateControl extends React.Component {
         if (response.status === "OK") {
             alert(response.message);
             document.forms[0].reset();
+            document.querySelector("#createuserdialog").close();
+            getdata();
         }
         else alert(response.message);
     }
-    render() {
-        return (
-            <div className="tab-pane fade pb-5" id="userCreate" role="tabpanel" >
-                <form onSubmit={this.handleCreateUser}>
+
+    function getdata() {
+
+        let body = {
+            limit: limit,
+            skip: skip,
+            token: localStorage.getItem("token")
+        }
+        fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserlist", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: "cors"
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(result => {
+                setUsers(result.data);
+            })
+    }
+
+    useEffect(() => {
+        getdata();
+    }, [])
+
+    async function handleUserDelete(id, event) {
+        let body = {
+            user_id: id,
+            token: localStorage.getItem("token")
+        }
+        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/deleteuser", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: "cors"
+        });
+        response = await response.json();
+        if (response.status === "OK") {
+            alert(response.message);
+            getdata();
+        }
+        else alert(response.message);
+    }
+
+    function RenderActions(){
+        if(localStorage.getItem("is_admin") === "true"){
+            return (
+                <div className="btn-group" role="group">
+                        <button className="btn btn-primary" onClick={()=>{document.querySelector("#createuserdialog").showModal()}}>Create User</button>
+                        <button className="btn btn-secondary" onClick={() => { if(skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
+                        <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                </div>
+            )
+        }
+        else{
+            return (
+                <div className="btn-group" role="group">
+                        <button className="btn btn-secondary" onClick={() => { if(skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
+                        <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                </div>
+            )
+        }
+        
+    }
+
+    return (
+        <div className="my-4" id="userList">
+            <dialog className="border-0 rounded shadow-lg col-6" id="createuserdialog">
+                <form onSubmit={handleCreateUser}>
+                    <h2>Create a User</h2>
                     <div className="mb-3">
                         <label htmlFor="fullname" className="form-label">Fullname</label>
                         <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
@@ -160,14 +147,33 @@ class UserCreateControl extends React.Component {
                     </div>
 
                     <div className="form-check mb-3">
-                        <input className="form-check-input" type="checkbox" value="false" id="isAdminSelection" required></input>
+                        <input className="form-check-input" type="checkbox" value="false" id="isAdminSelection"></input>
                         <label className="form-check-label" htmlFor="isAdminSelection">
                             Is Admin
                         </label>
                     </div>
-                    <input type="submit" value="Create User" className="btn btn-primary"></input>
+                    <div className="d-flex justify-content-between">
+                        <button className="btn btn-danger" onClick={()=>{document.querySelector("#createuserdialog").close()}}>Cancel</button>
+                        <input type="submit" value="Create User" className="btn btn-primary"></input>
+                    </div>
                 </form>
+            </dialog>
+            <div className="d-flex justify-content-between align-items-center">
+                <h1>User Control</h1>
+                <RenderActions />
             </div>
-        )
-    }
+            <ul className="list-group list-group-flush">
+                {
+                    users && users.map(el => {
+                        let button = "";
+                        let adminBadge = "";
+                        if (el.is_admin === true) adminBadge = <span className="badge bg-warning text-dark">Administrator</span>
+                        if (localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event) => { handleUserDelete(el._id, event) }}>Delete User</button>;
+                        return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge} {button}</li>
+                    })
+                }
+            </ul>
+        </div>
+    )
 }
+
