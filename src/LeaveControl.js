@@ -92,13 +92,16 @@ export function LeaveControl() {
 
 }
 
+var skip1 = 0
+var limit1 = 10
 
 function MyLeaveControl() {
     var [myleaves, setMyleaves] = useState(null);
-    useEffect(() => {
+
+    function getdata(){
         let body = {
-            limit: 20,
-            skip: 0,
+            limit: limit1,
+            skip: skip1,
             token: localStorage.getItem("token")
         }
         fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getcurrentuserleavelist", {
@@ -115,12 +118,21 @@ function MyLeaveControl() {
             .then(result => {
                 setMyleaves(result.data);
             })
+    }
+    useEffect(() => {
+        getdata();
 
     },[])
 
     return (
         <div class="tab-pane fade show active" id="myleaves" role="tabpanel" >
-            <h2>My Leaves</h2>
+            <div className="d-flex align-items-center justify-content-between">
+                <h2>My Leaves</h2>
+                <div className="btn-group" role="group">
+                    <button className="btn btn-secondary" onClick={() => { if(skip1 === 0) return; skip1 = skip1 - limit1; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { skip1 = skip1 + limit1; getdata() }}>&gt;</button>
+                </div>
+            </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -166,16 +178,17 @@ function MyLeaveControl() {
 
 
 
-
+var skip2 = 0
+var limit2 = 10
 
 function UserLeaveControl() {
 
     var [leaves, setLeaves] = useState(null);
 
-    useEffect(() => {
+    function getdata(){
         let body = {
-            limit: 20,
-            skip: 0,
+            limit: limit2,
+            skip: skip2,
             token: localStorage.getItem("token")
         }
         fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getleavelist", {
@@ -192,7 +205,9 @@ function UserLeaveControl() {
             .then(result => {
                 setLeaves(result.data);
             })
-
+    }
+    useEffect(() => {
+        getdata();
     },[])
 
     async function handleLeave(id, status, event) {
@@ -234,7 +249,13 @@ function UserLeaveControl() {
 
     return (
         <div className="tab-pane fade" id="userLeaves" role="tabpanel" >
-            <h2>User Leaves</h2>
+            <div className="d-flex align-items-center justify-content-between">
+                <h2>User Leave Application</h2>
+                <div className="btn-group" role="group">
+                    <button className="btn btn-secondary" onClick={() => { if(skip2 === 0) return; skip2 = skip2 - limit2; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { skip2 = skip2 + limit2; getdata() }}>&gt;</button>
+                </div>
+            </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
