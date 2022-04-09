@@ -122,7 +122,7 @@ function UserListControl() {
 
     return (
         <div className="my-4" id="userList">
-            <dialog className="border-0 rounded shadow-lg col-6" id="createuserdialog">
+            <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="createuserdialog">
                 <form onSubmit={handleCreateUser}>
                     <h2>Create a User</h2>
                     <div className="mb-3">

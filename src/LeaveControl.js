@@ -44,7 +44,7 @@ export function LeaveControl() {
 
     return (
         <div className="LeaveControl container">
-            <dialog id="clrd" className="border border-0 col-6 shadow-lg rounded">
+            <dialog id="clrd" className="border border-0 col-12 col-lg-6 shadow-lg rounded">
                 <h5 className="card-title">Request Leave</h5>
 
                 <form onSubmit={(e) => { handleRequest(e) }} id="leaveRequestForm" method="dialog">

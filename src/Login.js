@@ -1,7 +1,7 @@
 
 function Login() {
     return (
-        <div className="Login container col-5">
+        <div className="Login container col-lg-5 col-12">
             <h1 className="my-4">Login</h1>
 
             <form onSubmit={HandleLogin} method="post">

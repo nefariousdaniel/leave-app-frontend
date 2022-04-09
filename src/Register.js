@@ -2,9 +2,6 @@ import React from "react";
 
 class Register extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
     
     async handleRegister(event){
         event.preventDefault();
@@ -35,7 +32,7 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div className="Register container col-5">
+            <div className="Register container col-12 col-lg-5">
                 <h1 className="my-4">Register</h1>
 
                 <form onSubmit={this.handleRegister}>
