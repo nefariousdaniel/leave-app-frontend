@@ -34,18 +34,30 @@ function NavLinks() {
       <div className="navbar-nav">
         <Link className="nav-link" to="/Dashboard">Dashboard</Link>
         <Link className="nav-link" to="/UserControl">User Control</Link>
-        <Link className="nav-link" to="/LeaveControl">Leave Control</Link>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Leave Control
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><Link className="dropdown-item" to="/MyLeaves">My Leaves</Link></li>
-            <li><a class="dropdown-item" href="#">User Leaves</a></li>
-          </ul>
-        </li>
+        <IsAdminNav />
         <a onClick={()=>{handlelogout()}} href="/noRoute" className="nav-link text-danger">Logout</a>
       </div>
+    )
+  }
+}
+
+function IsAdminNav(){
+  if(localStorage.getItem("is_admin")==="true"){
+    return(
+      <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Leave Control
+          </a>
+          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><Link className="dropdown-item" to="/MyLeaves">My Leaves</Link></li>
+            <li><Link className="dropdown-item" to="/UserLeaves">User Leaves</Link></li>
+          </ul>
+        </li>
+    )
+  }
+  else if(localStorage.getItem("is_admin")==="false"){
+    return(
+      <Link className="nav-link" to="/MyLeaves">My Leaves</Link>
     )
   }
 }

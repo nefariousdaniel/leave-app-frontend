@@ -123,7 +123,7 @@ export function MyLeaves() {
 
 
                         return (
-                            <div href="#" class="list-group-item list-group-item-action">
+                            <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                     <h5 class="mb-1">{el.description}</h5>
                                     {statusField}
