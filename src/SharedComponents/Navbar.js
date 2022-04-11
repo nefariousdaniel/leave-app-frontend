@@ -35,6 +35,15 @@ function NavLinks() {
         <Link className="nav-link" to="/Dashboard">Dashboard</Link>
         <Link className="nav-link" to="/UserControl">User Control</Link>
         <Link className="nav-link" to="/LeaveControl">Leave Control</Link>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Leave Control
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><Link className="dropdown-item" to="/MyLeaves">My Leaves</Link></li>
+            <li><a class="dropdown-item" href="#">User Leaves</a></li>
+          </ul>
+        </li>
         <a onClick={()=>{handlelogout()}} href="/noRoute" className="nav-link text-danger">Logout</a>
       </div>
     )

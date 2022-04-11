@@ -98,7 +98,7 @@ var limit1 = 10
 function MyLeaveControl() {
     var [myleaves, setMyleaves] = useState(null);
 
-    function getdata(){
+    function getdata() {
         let body = {
             limit: limit1,
             skip: skip1,
@@ -122,14 +122,14 @@ function MyLeaveControl() {
     useEffect(() => {
         getdata();
 
-    },[])
+    }, [])
 
     return (
         <div class="tab-pane fade show active" id="myleaves" role="tabpanel" >
             <div className="d-flex align-items-center justify-content-between">
                 <h2>My Leaves</h2>
                 <div className="btn-group" role="group">
-                    <button className="btn btn-secondary" onClick={() => { if(skip1 === 0) return; skip1 = skip1 - limit1; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { if (skip1 === 0) return; skip1 = skip1 - limit1; getdata() }}>&lt;</button>
                     <button className="btn btn-secondary" onClick={() => { skip1 = skip1 + limit1; getdata() }}>&gt;</button>
                 </div>
             </div>
@@ -185,7 +185,7 @@ function UserLeaveControl() {
 
     var [leaves, setLeaves] = useState(null);
 
-    function getdata(){
+    function getdata() {
         let body = {
             limit: limit2,
             skip: skip2,
@@ -208,7 +208,7 @@ function UserLeaveControl() {
     }
     useEffect(() => {
         getdata();
-    },[])
+    }, [])
 
     async function handleLeave(id, status, event) {
         console.log(id, status);
@@ -252,7 +252,7 @@ function UserLeaveControl() {
             <div className="d-flex align-items-center justify-content-between">
                 <h2>User Leave Application</h2>
                 <div className="btn-group" role="group">
-                    <button className="btn btn-secondary" onClick={() => { if(skip2 === 0) return; skip2 = skip2 - limit2; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { if (skip2 === 0) return; skip2 = skip2 - limit2; getdata() }}>&lt;</button>
                     <button className="btn btn-secondary" onClick={() => { skip2 = skip2 + limit2; getdata() }}>&gt;</button>
                 </div>
             </div>
@@ -304,6 +304,33 @@ function UserLeaveControl() {
 
                 </tbody>
             </table>
+
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action bg-primary text-white" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    <small>And some small print.</small>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-success text-white">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    <small class="">And some muted small print.</small>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-danger text-white">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small class="">3 days ago</small>
+                    </div>
+                    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    <small class="">And some muted small print.</small>
+                </a>
+            </div>
         </div>
     )
 }

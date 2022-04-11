@@ -99,33 +99,33 @@ function UserListControl() {
         else alert(response.message);
     }
 
-    function RenderActions(){
-        if(localStorage.getItem("is_admin") === "true"){
+    function RenderActions() {
+        if (localStorage.getItem("is_admin") === "true") {
             return (
                 <div className="btn-group" role="group">
-                        <button className="btn btn-primary" onClick={()=>{document.querySelector("#createuserdialog").showModal()}}>Create User</button>
-                        <button className="btn btn-secondary" onClick={() => { if(skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
-                        <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                    <button className="btn btn-primary" onClick={() => { document.querySelector("#createuserdialog").showModal() }}>Add User</button>
+                    <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
                 </div>
             )
         }
-        else{
+        else {
             return (
                 <div className="btn-group" role="group">
-                        <button className="btn btn-secondary" onClick={() => { if(skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
-                        <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                    <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
+                    <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
                 </div>
             )
         }
-        
+
     }
 
-    async function loadEditModal(id){
+    async function loadEditModal(id) {
         console.log(id);
-        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserdetails",{
-            method:"POST",
-            body:JSON.stringify({"token":localStorage.token,"user_id":id}),
-            headers:{
+        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserdetails", {
+            method: "POST",
+            body: JSON.stringify({ "token": localStorage.token, "user_id": id }),
+            headers: {
                 "Content-Type": "application/json"
             },
             mode: "cors"
@@ -140,38 +140,38 @@ function UserListControl() {
         document.querySelector("#edituserdialog").showModal();
     }
 
-    async function handleEditUser(){
+    async function handleEditUser() {
         let form = document.querySelector("#editUserForm");
         let body = {
             user_id: form[0].value,
             fullname: form[1].value,
             email: form[2].value,
             leave_balance: form[3].value,
-            token:localStorage.token,
+            token: localStorage.token,
         };
         console.log(form[4].checked);
-        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/edituserdetails",{
-            method:"PUT",
-            body:JSON.stringify(body),
-            headers:{
+        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/edituserdetails", {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
                 "Content-Type": "application/json"
             },
             mode: "cors"
         });
         response = await response.json();
-        if(response.status === "OK"){
+        if (response.status === "OK") {
             alert(`${response.message} - Changes will take place next time you log in.`)
             document.querySelector("#edituserdialog").close();
             document.querySelector("#editUserForm").reset();
             getdata();
         }
-        else{
+        else {
             alert(response.message)
         }
     }
 
     return (
-        <div className="my-4" id="userList">
+        <div className="my-4 container" id="userList">
             <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="createuserdialog">
                 <form onSubmit={handleCreateUser}>
                     <h2>Create a User</h2>
@@ -203,14 +203,14 @@ function UserListControl() {
                         </label>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-danger" onClick={()=>{document.querySelector("#createuserdialog").close()}}>Cancel</button>
-                        <input type="submit" value="Create User" className="btn btn-primary"></input>
+                        <button className="btn btn-danger" onClick={() => { document.querySelector("#createuserdialog").close() }}>Cancel</button>
+                        <input type="submit" value="Add User" className="btn btn-primary"></input>
                     </div>
                 </form>
             </dialog>
 
             <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="edituserdialog">
-                <form onSubmit={(e)=>{e.preventDefault(); handleEditUser()}} id="editUserForm">
+                <form onSubmit={(e) => { e.preventDefault(); handleEditUser() }} id="editUserForm">
                     <h2>Edit User</h2>
                     <input type="hidden" name="user_id" value="user_id"></input>
                     <div className="mb-3">
@@ -229,7 +229,7 @@ function UserListControl() {
                     </div>
 
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-danger" onClick={(e)=>{e.preventDefault(); document.querySelector("#edituserdialog").close()}}>Cancel</button>
+                        <button className="btn btn-danger" onClick={(e) => { e.preventDefault(); document.querySelector("#edituserdialog").close() }}>Cancel</button>
                         <input type="submit" value="Edit User" className="btn btn-primary"></input>
                     </div>
                 </form>
@@ -238,19 +238,41 @@ function UserListControl() {
                 <h1>User Control</h1>
                 <RenderActions />
             </div>
-            <ul className="list-group list-group-flush">
+
+            <div className="list-group my-3">
+
                 {
                     users && users.map(el => {
                         let button = "";
                         let button2 = "";
                         let adminBadge = "";
-                        if (el.is_admin === true) adminBadge = <span className="badge bg-warning text-dark">Administrator</span>
+                        if (el.is_admin === true) adminBadge = <span className="ms-2 badge bg-primary text-white">Administrator</span>
                         if (localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event) => { handleUserDelete(el._id, event) }}>Delete</button>;
                         if (localStorage.getItem("is_admin") === "true") button2 = <button className="btn btn-warning btn-sm float-end me-1" onClick={(event) => { loadEditModal(el._id) }}>Edit</button>;
-                        return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge}  {button} {button2}</li>
+                        return (<div class="list-group-item list-group-item-action" key={el._id}>
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <h5 class="mb-1">{el.fullname}</h5>
+                            {adminBadge}
+                        </div>
+    
+                        <div className="d-flex w-100 justify-content-between">
+                            <small>
+                                <p className="mb-0">Email: <i>{el.email}</i></p>
+                                <p className="mb-0">Leave Balance: <i>{el.leave_balance}</i></p>
+                            </small>
+                            <small>
+                                {button} {button2}
+                            </small>
+                        </div>
+                    </div>)
                     })
                 }
-            </ul>
+
+
+                
+
+
+            </div>
         </div>
     )
 }

@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
 
     CloseCompanyComponent() {
         if (localStorage.getItem('is_admin') === "true") {
-            return <li className="list-group-item d-flex justify-content-between align-items-start"><button className="btn btn-danger btn-sm" onClick={() => { handleCloseCompany() }}>Close Company</button></li>
+            return <li className="list-group-item d-flex justify-content-between align-items-start"><button className="btn btn-danger col-12" onClick={() => { handleCloseCompany() }}>Close Company</button></li>
         }
         else {
             return null
