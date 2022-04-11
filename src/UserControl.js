@@ -120,6 +120,56 @@ function UserListControl() {
         
     }
 
+    async function loadEditModal(id){
+        console.log(id);
+        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserdetails",{
+            method:"POST",
+            body:JSON.stringify({"token":localStorage.token,"user_id":id}),
+            headers:{
+                "Content-Type": "application/json"
+            },
+            mode: "cors"
+        });
+        response = await response.json();
+        response = response.data[0];
+        var form = document.querySelector("#editUserForm");
+        form[0].value = response._id;
+        form[1].value = response.fullname;
+        form[2].value = response.email;
+        form[3].value = response.leave_balance;
+        document.querySelector("#edituserdialog").showModal();
+    }
+
+    async function handleEditUser(){
+        let form = document.querySelector("#editUserForm");
+        let body = {
+            user_id: form[0].value,
+            fullname: form[1].value,
+            email: form[2].value,
+            leave_balance: form[3].value,
+            token:localStorage.token,
+        };
+        console.log(form[4].checked);
+        let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/edituserdetails",{
+            method:"PUT",
+            body:JSON.stringify(body),
+            headers:{
+                "Content-Type": "application/json"
+            },
+            mode: "cors"
+        });
+        response = await response.json();
+        if(response.status === "OK"){
+            alert(`${response.message} - Changes will take place next time you log in.`)
+            document.querySelector("#edituserdialog").close();
+            document.querySelector("#editUserForm").reset();
+            getdata();
+        }
+        else{
+            alert(response.message)
+        }
+    }
+
     return (
         <div className="my-4" id="userList">
             <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="createuserdialog">
@@ -147,7 +197,7 @@ function UserListControl() {
                     </div>
 
                     <div className="form-check mb-3">
-                        <input className="form-check-input" type="checkbox" value="false" id="isAdminSelection"></input>
+                        <input className="form-check-input" type="checkbox" name="is_admin" value="false" id="isAdminSelection"></input>
                         <label className="form-check-label" htmlFor="isAdminSelection">
                             Is Admin
                         </label>
@@ -155,6 +205,32 @@ function UserListControl() {
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-danger" onClick={()=>{document.querySelector("#createuserdialog").close()}}>Cancel</button>
                         <input type="submit" value="Create User" className="btn btn-primary"></input>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="edituserdialog">
+                <form onSubmit={(e)=>{e.preventDefault(); handleEditUser()}} id="editUserForm">
+                    <h2>Edit User</h2>
+                    <input type="hidden" name="user_id" value="user_id"></input>
+                    <div className="mb-3">
+                        <label htmlFor="fullname" className="form-label">Fullname</label>
+                        <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">E-mail</label>
+                        <input type="email" name="email" className="form-control" id="email" placeholder="someone@example.com" required></input>
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="leave_balance" className="form-label">Leave Balance</label>
+                        <input type="number" name="leave_balance" className="form-control" id="leave_balance" placeholder="15" required></input>
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                        <button className="btn btn-danger" onClick={(e)=>{e.preventDefault(); document.querySelector("#edituserdialog").close()}}>Cancel</button>
+                        <input type="submit" value="Edit User" className="btn btn-primary"></input>
                     </div>
                 </form>
             </dialog>
@@ -166,10 +242,12 @@ function UserListControl() {
                 {
                     users && users.map(el => {
                         let button = "";
+                        let button2 = "";
                         let adminBadge = "";
                         if (el.is_admin === true) adminBadge = <span className="badge bg-warning text-dark">Administrator</span>
-                        if (localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event) => { handleUserDelete(el._id, event) }}>Delete User</button>;
-                        return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge} {button}</li>
+                        if (localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event) => { handleUserDelete(el._id, event) }}>Delete</button>;
+                        if (localStorage.getItem("is_admin") === "true") button2 = <button className="btn btn-warning btn-sm float-end me-1" onClick={(event) => { loadEditModal(el._id) }}>Edit</button>;
+                        return <li key={el._id} className="list-group-item">{el.fullname} - <i>{el.email}</i> {adminBadge}  {button} {button2}</li>
                     })
                 }
             </ul>
