@@ -6,7 +6,7 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">Leave App</a>
+          <Link className="navbar-brand" to="/">Leave App</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -35,7 +35,7 @@ function NavLinks() {
         <Link className="nav-link" to="/Dashboard">Dashboard</Link>
         <Link className="nav-link" to="/UserControl">User Control</Link>
         <IsAdminNav />
-        <a onClick={()=>{handlelogout()}} href="/noRoute" className="nav-link text-danger">Logout</a>
+        <a onClick={()=>{handlelogout()}} href="/" className="nav-link text-danger">Logout</a>
       </div>
     )
   }

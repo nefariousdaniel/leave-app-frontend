@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-var limit = 20;
+var limit = 10;
 var skip = 0;
 export function UserLeaves() {
 
@@ -34,10 +34,10 @@ export function UserLeaves() {
         getdata();
     }, [])
 
-    async function handleLeave(leaveID, userID,status, event) {
+    async function handleLeave(leaveID, email,status, event) {
         let body = {
             "leave_id": leaveID,
-            "user_id": userID,
+            "email": email,
             "is_approved": status,
             "token": localStorage.getItem("token")
         }
@@ -91,8 +91,8 @@ export function UserLeaves() {
                         let buttons = null;
                         if (!el.is_approved && !el.is_rejected) {
                             buttons = <div>
-                                <button onClick={(e) => handleLeave(el._id, el.user[0]._id,1, e)} className="btn btn-sm btn-outline-success me-1">Approve</button>
-                                <button onClick={(e) => handleLeave(el._id, el.user[0]._id,0, e)} className="btn btn-sm btn-outline-danger">Reject</button>
+                                <button onClick={(e) => handleLeave(el._id, el.user[0].email,1, e)} className="btn btn-sm btn-outline-success me-1">Approve</button>
+                                <button onClick={(e) => handleLeave(el._id, el.user[0].email,0, e)} className="btn btn-sm btn-outline-danger">Reject</button>
                             </div>
 
                             if (el.user_id === localStorage.user_id) {
@@ -108,7 +108,7 @@ export function UserLeaves() {
                             actionField = <span className="bg-danger badge">Rejected</span>
                         }
                         return (
-                            <div key={el._id} href="#" className="list-group-item list-group-item-action">
+                            <div key={el._id} href="#" className="list-group-item list-group-item-action text-break">
                                 <div className="d-flex w-100 justify-content-between align-items-center">
                                     <h5 className="mb-1">{el.description}</h5>
                                     <small className="status">{actionField}</small>
@@ -118,6 +118,7 @@ export function UserLeaves() {
                                 <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
                                 <p className="mb-0">UserID: {el.user[0]._id}</p>
                                 <p className="mb-0">LeaveID: {el._id}</p>
+                                <p className="mb-0">E-mail ID: {el.user[0].email}</p>
                                 {buttons}
                             </div>
                         )

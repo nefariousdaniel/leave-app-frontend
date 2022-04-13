@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-var limit = 20;
+var limit = 10;
 var skip = 0;
 export function MyLeaves() {
 
@@ -16,6 +16,7 @@ export function MyLeaves() {
             skip: skip,
             token: localStorage.getItem("token")
         }
+        console.log(body);
         fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getcurrentuserleavelist", {
             method: "POST",
             body: JSON.stringify(body),
@@ -123,13 +124,13 @@ export function MyLeaves() {
 
 
                         return (
-                            <div class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h5 class="mb-1">{el.description}</h5>
+                            <div className="list-group-item list-group-item-action text-break">
+                                <div className="d-flex w-100 justify-content-between align-items-center">
+                                    <h5 className="mb-1 ">{el.description}</h5>
                                     {statusField}
                                 </div>
-                                <p class="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()}-{start_date.getDate()}</p>
-                                <p class="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
+                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()}-{start_date.getDate()}</p>
+                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
                             </div>
 
 

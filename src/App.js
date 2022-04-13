@@ -1,6 +1,7 @@
 import Navbar from './SharedComponents/Navbar';
 import Register from "./Register.js";
 import Login from "./Login.js";
+import Start from "./Start";
 import {Dashboard} from "./Dashboard.js";
 import {UserControl} from "./UserControl.js";
 import {MyLeaves} from "./MyLeaves.jsx";
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route path="/" element={<Start />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           
