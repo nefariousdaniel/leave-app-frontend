@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import {ChangePasswordButton,ChangePasswordDialog} from "./UserControlComponents/ChangePassword";
+
 var limit = 10;
 var skip = 0;
 export class UserControl extends React.Component {
@@ -103,6 +105,7 @@ function UserListControl() {
         if (localStorage.getItem("is_admin") === "true") {
             return (
                 <div className="btn-group" role="group">
+                    <ChangePasswordButton />
                     <button className="btn btn-primary" onClick={() => { document.querySelector("#createuserdialog").showModal() }}>Add User</button>
                     <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
                     <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
@@ -112,6 +115,7 @@ function UserListControl() {
         else {
             return (
                 <div className="btn-group" role="group">
+                    <ChangePasswordButton />
                     <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
                     <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
                 </div>
@@ -208,6 +212,9 @@ function UserListControl() {
                     </div>
                 </form>
             </dialog>
+
+            <ChangePasswordDialog />
+
 
             <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="edituserdialog">
                 <form onSubmit={(e) => { e.preventDefault(); handleEditUser() }} id="editUserForm">
