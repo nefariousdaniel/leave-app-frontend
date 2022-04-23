@@ -38,8 +38,9 @@ export function MyLeaves() {
     }, [])
 
 
-    async function handleRequest(event) {
+    async function handleRequestLeave(event) {
         event.preventDefault();
+        document.querySelector("#requestLeavebtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
         let body = {
             "description": document.forms[0][0].value,
             "start_date": document.forms[0][1].value,
@@ -61,6 +62,8 @@ export function MyLeaves() {
 
         document.forms[0].reset();
         document.querySelector("#clrd").close();
+
+        document.querySelector("#requestLeavebtn").innerHTML = "Request Leave"
     }
 
 
@@ -80,7 +83,7 @@ export function MyLeaves() {
             <dialog id="clrd" className="border border-0 col-12 col-lg-6 shadow-lg rounded">
                 <h5 className="card-title">Request Leave</h5>
 
-                <form onSubmit={(e) => { handleRequest(e) }} id="leaveRequestForm" method="dialog">
+                <form onSubmit={(e) => { handleRequestLeave(e) }} id="leaveRequestForm" method="dialog">
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Description</label>
                         <input type="text" name="description" className="form-control" id="description" placeholder="A reason for leave." required></input>
@@ -99,8 +102,8 @@ export function MyLeaves() {
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center">
-                        <input type="submit" value="Request Leave" className="btn btn-primary float-end"></input>
                         <button className="btn btn-danger float-end" onClick={(e) => { e.preventDefault(); document.querySelector("#clrd").close() }}>Cancel</button>
+                        <button type="submit" className="btn btn-primary float-end" id="requestLeavebtn">Request Leave</button>
                     </div>
                 </form>
             </dialog>

@@ -16,7 +16,7 @@ function Login() {
                 </div>
 
                 <div className="mb-3">
-                    <input type="submit" name="submit" className="btn btn-primary" id="submit"></input>
+                    <button type="submit" className="btn btn-primary" id="loginbtn">Log In</button>
                 </div>
 
             </form>
@@ -25,6 +25,7 @@ function Login() {
 }
 
 async function HandleLogin(event){
+    document.querySelector("#loginbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
     event.preventDefault();
     var data = {};
     data.email = document.forms[0][0].value;
@@ -48,6 +49,7 @@ async function HandleLogin(event){
     else if(response.status === "FAIL"){
         alert(response.message);
     }
+    document.querySelector("#loginbtn").innerHTML = "Log in";
 }
 
 async function getUserDetails(){

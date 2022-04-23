@@ -5,6 +5,7 @@ export function ChangePasswordButton(){
 }
 
 async function handleChangePassword(){
+    document.querySelector("#changepasswordbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
     let form = document.querySelector("#changepasswordform");
     let body = {
         currentpassword: form[0].value,
@@ -30,6 +31,7 @@ async function handleChangePassword(){
     else {
         alert(response.message)
     }
+    document.querySelector("#changepasswordbtn").innerHTML = `Change Password`;
 }
 
 
@@ -53,7 +55,7 @@ export function ChangePasswordDialog(){
                     
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-danger" onClick={() => { document.querySelector("#changepassworddialog").close() }}>Cancel</button>
-                        <input type="submit" value="Change Password" className="btn btn-primary"></input>
+                        <button type="submit" id="changepasswordbtn" className="btn btn-primary">Change Password</button>
                     </div>
                 </form>
             </dialog>

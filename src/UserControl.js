@@ -24,6 +24,7 @@ function UserListControl() {
     var [users, setUsers] = useState(null);
 
     async function handleCreateUser(event) {
+        document.querySelector("#adduserbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
         event.preventDefault();
         let body = {
             "fullname": document.forms[0][0].value,
@@ -51,6 +52,7 @@ function UserListControl() {
             getdata();
         }
         else alert(response.message);
+        document.querySelector("#adduserbtn").innerHTML = "Add User";
     }
 
     function getdata() {
@@ -81,6 +83,7 @@ function UserListControl() {
     }, [])
 
     async function handleUserDelete(id, event) {
+        event.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
         let body = {
             user_id: id,
             token: localStorage.getItem("token")
@@ -99,6 +102,7 @@ function UserListControl() {
             getdata();
         }
         else alert(response.message);
+        event.target.innerHTML = `Delete`
     }
 
     function RenderActions() {
@@ -124,7 +128,8 @@ function UserListControl() {
 
     }
 
-    async function loadEditModal(id) {
+    async function loadEditModal(id,event) {
+        event.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
         console.log(id);
         let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/getuserdetails", {
             method: "POST",
@@ -142,6 +147,7 @@ function UserListControl() {
         form[2].value = response.email;
         form[3].value = response.leave_balance;
         document.querySelector("#edituserdialog").showModal();
+        event.target.innerHTML = `Edit`;
     }
 
     async function handleEditUser() {
@@ -178,7 +184,7 @@ function UserListControl() {
         <div className="my-4 container" id="userList">
             <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="createuserdialog">
                 <form onSubmit={handleCreateUser}>
-                    <h2>Create a User</h2>
+                    <h2>Add User</h2>
                     <div className="mb-3">
                         <label htmlFor="fullname" className="form-label">Fullname</label>
                         <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
@@ -208,7 +214,7 @@ function UserListControl() {
                     </div>
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-danger" onClick={() => { document.querySelector("#createuserdialog").close() }}>Cancel</button>
-                        <input type="submit" value="Add User" className="btn btn-primary"></input>
+                        <button className="btn btn-primary" type="submit" id="adduserbtn">Add User</button>
                     </div>
                 </form>
             </dialog>
@@ -255,7 +261,7 @@ function UserListControl() {
                         let adminBadge = "";
                         if (el.is_admin === true) adminBadge = <span className="ms-2 badge bg-primary text-white">Administrator</span>
                         if (localStorage.getItem("is_admin") === "true" && localStorage.user_id !== el._id) button = <button className="btn btn-danger btn-sm float-end" onClick={(event) => { handleUserDelete(el._id, event) }}>Delete</button>;
-                        if (localStorage.getItem("is_admin") === "true") button2 = <button className="btn btn-warning btn-sm float-end me-1" onClick={(event) => { loadEditModal(el._id) }}>Edit</button>;
+                        if (localStorage.getItem("is_admin") === "true") button2 = <button className="btn btn-warning btn-sm float-end me-1" onClick={(event) => { loadEditModal(el._id,event) }}>Edit</button>;
                         return (<div class="list-group-item list-group-item-action" key={el._id}>
                         <div class="d-flex w-100 justify-content-start align-items-center">
                             <h5 class="mb-1">{el.fullname}</h5>

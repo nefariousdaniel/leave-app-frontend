@@ -35,6 +35,7 @@ export function UserLeaves() {
     }, [])
 
     async function handleLeave(leaveID, email,status, event) {
+        event.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
         let body = {
             "leave_id": leaveID,
             "email": email,

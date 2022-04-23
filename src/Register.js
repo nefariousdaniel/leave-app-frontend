@@ -3,8 +3,8 @@ import React from "react";
 class Register extends React.Component {
 
     
-    async handleRegister(event){
-        event.preventDefault();
+    async handleRegister(){
+        document.querySelector("#registerbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
         var data = {};
         data.fullname = document.forms[0][0].value;
         data.company_name = document.forms[0][1].value;
@@ -28,6 +28,7 @@ class Register extends React.Component {
         else if(response.status === "FAIL"){
             alert(response.message);
         }
+        document.querySelector("#registerbtn").innerHTML = `Register`;
     }
 
     render() {
@@ -35,7 +36,7 @@ class Register extends React.Component {
             <div className="Register container col-12 col-lg-5">
                 <h1 className="my-4">Register</h1>
 
-                <form onSubmit={this.handleRegister}>
+                <form onSubmit={(event)=>{event.preventDefault(); this.handleRegister()}}>
                     <div className="mb-3">
                         <label for="fullname" className="form-label">Full Name</label>
                         <input type="text" name="fullname" className="form-control" id="fullname" placeholder="John Doe" required></input>
@@ -62,7 +63,7 @@ class Register extends React.Component {
                     </div>
 
                     <div className="mb-3">
-                        <input type="submit" value="Register" name="Register" className="btn btn-primary" id="submit"></input>
+                        <button type="submit" className="btn btn-primary" id="registerbtn">Register</button>
                     </div>
 
                 </form>
