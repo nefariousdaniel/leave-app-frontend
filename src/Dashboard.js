@@ -75,8 +75,7 @@ export function Dashboard(){
         <div className="Dashboard container mb-3">
             <h1 className="my-4">Dashboard</h1>
 
-            <div className="container d-flex gap-2">
-                <div className="card col-lg-6 col-12">
+            <div className="card col-lg-6 col-12">
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item d-flex justify-content-between align-items-start">
                             <div className="ms-2 me-auto">
@@ -124,8 +123,6 @@ export function Dashboard(){
 
                     </ul>
                 </div>
-
-            </div>
 
         </div>
     )

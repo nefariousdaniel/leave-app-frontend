@@ -91,7 +91,7 @@ export function UserLeaves() {
                         let actionField = null;
                         let buttons = null;
                         if (!el.is_approved && !el.is_rejected) {
-                            buttons = <div>
+                            buttons = <div className="mt-3">
                                 <button onClick={(e) => handleLeave(el._id, el.user[0].email,1, e)} className="btn btn-sm btn-outline-success me-1">Approve</button>
                                 <button onClick={(e) => handleLeave(el._id, el.user[0].email,0, e)} className="btn btn-sm btn-outline-danger">Reject</button>
                             </div>
@@ -117,8 +117,6 @@ export function UserLeaves() {
                                 <p className="mb-0">User: {el.user[0].fullname}</p>
                                 <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()}-{start_date.getDate()}</p>
                                 <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
-                                <p className="mb-0">UserID: {el.user[0]._id}</p>
-                                <p className="mb-0">LeaveID: {el._id}</p>
                                 <p className="mb-0">E-mail ID: {el.user[0].email}</p>
                                 {buttons}
                             </div>

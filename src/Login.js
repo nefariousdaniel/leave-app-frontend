@@ -7,12 +7,12 @@ function Login() {
             <form onSubmit={HandleLogin} method="post">
                 <div className="mb-3">
                     <label for="email" className="form-label">E-mail</label>
-                    <input type="email" name="email" className="form-control" id="email" placeholder="example@domain.com"></input>
+                    <input type="email" name="email" className="form-control" id="email" placeholder="example@domain.com" required></input>
                 </div>
 
                 <div className="mb-3">
                     <label for="password" className="form-label">Password</label>
-                    <input type="password" name="password" className="form-control" id="password" placeholder="secret"></input>
+                    <input type="password" name="password" className="form-control" id="password" placeholder="secret" required></input>
                 </div>
 
                 <div className="mb-3">
@@ -26,6 +26,7 @@ function Login() {
 
 async function HandleLogin(event){
     document.querySelector("#loginbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+    document.querySelector("#loginbtn").setAttribute("disabled","disabled");
     event.preventDefault();
     var data = {};
     data.email = document.forms[0][0].value;
@@ -50,6 +51,7 @@ async function HandleLogin(event){
         alert(response.message);
     }
     document.querySelector("#loginbtn").innerHTML = "Log in";
+    document.querySelector("#loginbtn").removeAttribute("disabled");
 }
 
 async function getUserDetails(){

@@ -41,7 +41,7 @@ export function ChangePasswordDialog(){
     return(
         <dialog className="border-0 rounded shadow-lg col-lg-6 col-12" id="changepassworddialog">
                 <form onSubmit={(e)=>{e.preventDefault(); handleChangePassword()}} id="changepasswordform">
-                    <h2>Create a User</h2>
+                    <h2>Change Password</h2>
                     <div className="mb-3">
                         <label htmlFor="currentpassword" className="form-label">Current Password</label>
                         <input type="password" name="currentpassword" className="form-control" id="currentpassword" placeholder="Current Password" required></input>

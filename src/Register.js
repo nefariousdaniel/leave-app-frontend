@@ -5,6 +5,7 @@ class Register extends React.Component {
     
     async handleRegister(){
         document.querySelector("#registerbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+        document.querySelector("#registerbtn").setAttribute("disabled","disabled");
         var data = {};
         data.fullname = document.forms[0][0].value;
         data.company_name = document.forms[0][1].value;
@@ -29,6 +30,8 @@ class Register extends React.Component {
             alert(response.message);
         }
         document.querySelector("#registerbtn").innerHTML = `Register`;
+        document.querySelector("#registerbtn").removeAttribute("disabled");
+        
     }
 
     render() {
