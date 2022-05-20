@@ -115,8 +115,8 @@ export function UserLeaves() {
                                     <small className="status">{actionField}</small>
                                 </div>
                                 <p className="mb-0">User: {el.user[0].fullname}</p>
-                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()}-{start_date.getDate()}</p>
-                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
+                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()+1}-{start_date.getDate()}</p>
+                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()+1}-{end_date.getDate()}</p>
                                 <p className="mb-0">E-mail ID: {el.user[0].email}</p>
                                 {buttons}
                             </div>

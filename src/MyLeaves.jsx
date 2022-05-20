@@ -133,8 +133,8 @@ export function MyLeaves() {
                                     <h5 className="mb-1 ">{el.description}</h5>
                                     {statusField}
                                 </div>
-                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()}-{start_date.getDate()}</p>
-                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()}-{end_date.getDate()}</p>
+                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()+1}-{start_date.getDate()}</p>
+                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()+1}-{end_date.getDate()}</p>
                             </div>
 
 
