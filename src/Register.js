@@ -36,7 +36,7 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div className="Register container col-12 col-lg-5">
+            <div className="Register container col-12 col-lg-5 mb-5">
                 <h1 className="my-4">Register</h1>
 
                 <form onSubmit={(event)=>{event.preventDefault(); this.handleRegister()}}>
@@ -62,7 +62,7 @@ class Register extends React.Component {
 
                     <div className="mb-3">
                         <label for="password" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="password" placeholder="secret" minLength={8} required></input>
+                        <input type="password" name="password" className="form-control" id="password" placeholder="secret" required title="Can contain letters, numbers and symbols like (@,-,$), and should be more than 8 characters." pattern="^[A-Z,a-z,0-9,@,$,-]{8,}$"></input>
                     </div>
 
                     <div className="mb-3">

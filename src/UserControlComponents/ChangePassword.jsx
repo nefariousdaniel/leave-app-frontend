@@ -13,7 +13,6 @@ async function handleChangePassword(){
         user_id: localStorage.getItem("user_id"),
         token: localStorage.token,
     };
-    console.log(body);
     let response = await fetch("https://831790nvce.execute-api.ap-south-1.amazonaws.com/dev/api/changepassword", {
         method: "PATCH",
         body: JSON.stringify(body),

@@ -8,6 +8,7 @@ export function UserLeaves() {
 
 
     var [leaves, setLeaves] = useState(null);
+    var [leavesCount, setLeavesCount] = useState(null);
 
     function getdata() {
         let body = {
@@ -28,6 +29,7 @@ export function UserLeaves() {
             })
             .then(result => {
                 setLeaves(result.data);
+                setLeavesCount(result.data.length)
             })
     }
     useEffect(() => {
@@ -72,12 +74,12 @@ export function UserLeaves() {
 
 
     return (
-        <div className="container">
+        <div className="container mb-5">
             <div className="d-flex justify-content-between align-items-center">
                 <h1 className="my-4">User Leaves</h1>
                 <div className="btn-group">
                     <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
-                    <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                    <button className="btn btn-secondary" onClick={() => { if (leavesCount < limit) return; skip = skip + limit; getdata() }}>&gt;</button>
                 </div>
             </div>
 
@@ -115,8 +117,8 @@ export function UserLeaves() {
                                     <small className="status">{actionField}</small>
                                 </div>
                                 <p className="mb-0">User: {el.user[0].fullname}</p>
-                                <p className="mb-0">Start Date: {start_date.getFullYear()}-{start_date.getMonth()+1}-{start_date.getDate()}</p>
-                                <p className="mb-0">End Date: {end_date.getFullYear()}-{end_date.getMonth()+1}-{end_date.getDate()}</p>
+                                <p className="mb-0">Start Date: {start_date.toDateString()}</p>
+                                <p className="mb-0">End Date: {end_date.toDateString()}</p>
                                 <p className="mb-0">E-mail ID: {el.user[0].email}</p>
                                 {buttons}
                             </div>

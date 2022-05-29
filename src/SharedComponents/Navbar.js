@@ -33,9 +33,9 @@ function NavLinks() {
     return (
       <div className="navbar-nav">
         <Link className="nav-link" to="/Dashboard">Dashboard</Link>
-        <Link className="nav-link" to="/UserControl">User Control</Link>
+        <Link className="nav-link" to="/UserControl">Users</Link>
         <IsAdminNav />
-        <a onClick={()=>{handlelogout()}} href="/" className="nav-link text-danger">Logout</a>
+        <Link onClick={()=>{handlelogout()}} to="/"className="nav-link text-danger">Logout</Link>
       </div>
     )
   }
@@ -45,8 +45,8 @@ function IsAdminNav(){
   if(localStorage.getItem("is_admin")==="true"){
     return(
       <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Leave Control
+          <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Leaves
           </a>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><Link className="dropdown-item" to="/MyLeaves">My Leaves</Link></li>

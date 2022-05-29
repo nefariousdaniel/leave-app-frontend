@@ -12,7 +12,7 @@ function Login() {
 
                 <div className="mb-3">
                     <label for="password" className="form-label">Password</label>
-                    <input type="password" name="password" className="form-control" id="password" placeholder="secret" required></input>
+                    <input type="password" name="password" className="form-control" id="password" placeholder="secret" required title="Can contain letters, numbers and symbols like (@,-,$), and should be more than 8 characters." pattern="^[A-Z,a-z,0-9,@,$,-]{8,}$"></input>
                 </div>
 
                 <div className="mb-3">
@@ -41,7 +41,6 @@ async function HandleLogin(event){
             mode: "cors"
         });
     response = await response.json();
-    console.log(response);
     if(response.status === "OK"){
         localStorage.setItem("token",response.token);
         alert(response.message);

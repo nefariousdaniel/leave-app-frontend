@@ -41,7 +41,6 @@ export function Dashboard(){
                 },
                 mode: "cors"
             }).then(response=>{return response.json()}).then(data=>{
-                console.log(data);
 
                 if(data.status === "OK"){
                     localStorage.setItem("user_details",JSON.stringify(data.data[0]));
@@ -95,7 +94,7 @@ export function Dashboard(){
                                 {userInfo.company[0].address}
                             </div>
                         </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-start">
+                        {/* <li className="list-group-item d-flex justify-content-between align-items-start">
                             <div className="ms-2 me-auto">
                                 <div className="fw-bold">Is Admin</div>
                                 {userInfo.is_admin.toString()}
@@ -112,7 +111,7 @@ export function Dashboard(){
                                 <div className="fw-bold">Company ID</div>
                                 {userInfo.company_id}
                             </div>
-                        </li>
+                        </li> */}
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <b>Leaves Balance</b>

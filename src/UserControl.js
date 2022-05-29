@@ -22,6 +22,7 @@ export class UserControl extends React.Component {
 function UserListControl() {
 
     var [users, setUsers] = useState(null);
+    var [usersCount, setUsersCount] = useState(null);
 
     async function handleCreateUser(event) {
         document.querySelector("#adduserbtn").innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
@@ -75,6 +76,7 @@ function UserListControl() {
             })
             .then(result => {
                 setUsers(result.data);
+                setUsersCount(result.data.length);
             })
     }
 
@@ -112,7 +114,7 @@ function UserListControl() {
                     <ChangePasswordButton />
                     <button className="btn btn-primary" onClick={() => { document.querySelector("#createuserdialog").showModal() }}>Add User</button>
                     <button className="btn btn-secondary" onClick={() => { if (skip === 0) return; skip = skip - limit; getdata() }}>&lt;</button>
-                    <button className="btn btn-secondary" onClick={() => { skip = skip + limit; getdata() }}>&gt;</button>
+                    <button className="btn btn-secondary" onClick={() => { if(usersCount < limit) return; skip = skip + limit; getdata() }}>&gt;</button>
                 </div>
             )
         }
@@ -170,7 +172,7 @@ function UserListControl() {
         });
         response = await response.json();
         if (response.status === "OK") {
-            alert(`${response.message} - Changes will take place next time you log in.`)
+            alert(`${response.message}`)
             document.querySelector("#edituserdialog").close();
             document.querySelector("#editUserForm").reset();
             getdata();
@@ -248,7 +250,7 @@ function UserListControl() {
                 </form>
             </dialog>
             <div className="d-flex justify-content-between align-items-center">
-                <h1>User Control</h1>
+                <h1>Users</h1>
                 <RenderActions />
             </div>
 
